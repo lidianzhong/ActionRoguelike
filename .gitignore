@@ -1,5 +1,15 @@
 ﻿/.vs
-/Binaries/Win64
-/Config
+/Binaries
 /Content
+/DerivedDataCache
 /Intermediate
+/Saved
+/*.gitattributes
+/*.gitignore
+/*.vsconfig
+/*ActionRoguelike.sln
+/*ActionRoguelike.uproject
+
+/.gitignore
+/ActionRoguelike.sln
+/Saved/Logs/ActionRoguelike.log
