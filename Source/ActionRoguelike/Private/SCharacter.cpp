@@ -36,6 +36,10 @@ ASCharacter::ASCharacter()
 
 	AttackAnimDelay = 0.2f;
 
+	TimeToHitParamName = "TimeToHit";
+
+	HandSocketName = "Muzzle_01";
+
 }
 
 void ASCharacter::PostInitializeComponents()
@@ -112,6 +116,12 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta)
 {
+
+	if (Delta < 0.0f)
+	{
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+	}
+
 	if (NewHealth <= 0.0f && Delta < 0.0f)
 	{
 		APlayerController* PC = Cast<APlayerController>(GetController());
@@ -121,8 +131,8 @@ void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent*
 
 void ASCharacter::PrimaryAttack()
 {
-	// play animmontage about attack
-	PlayAnimMontage(AttackAnim);
+
+	StartAttackEffects();
 
 	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ASCharacter::PrimaryAttack_TimeElapsed, AttackAnimDelay);
 
@@ -178,7 +188,7 @@ void ASCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 {
 	if (ensureAlways(ClassToSpawn))
 	{
-		FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+		FVector HandLocation = GetMesh()->GetSocketLocation(HandSocketName);
 
 
 		FActorSpawnParameters SpawnParams;
