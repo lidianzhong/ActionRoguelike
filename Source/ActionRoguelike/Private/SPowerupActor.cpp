@@ -5,6 +5,16 @@
 #include "Components/SphereComponent.h"
 
 
+ASPowerupActor::ASPowerupActor()
+{
+	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+
+	SphereComp->SetCollisionProfileName("Powerup");
+	RootComponent = SphereComp;
+
+	RespawnTime = 10.0f;
+
+}
 
 void ASPowerupActor::ShowPowerup()
 {
@@ -15,8 +25,7 @@ void ASPowerupActor::HideAndCooldownPowerup()
 {
 	SetPowerupState(false);
 
-	FTimerHandle TimerHandle_RespawnTImer;
-	GetWorldTimerManager().SetTimer(TimerHandle_RespawnTImer, this, &ASPowerupActor::ShowPowerup, RespawnTime);
+	GetWorldTimerManager().SetTimer(TimerHandle_RespawnTimer, this, &ASPowerupActor::ShowPowerup, RespawnTime);
 
 }
 
@@ -28,16 +37,6 @@ void ASPowerupActor::SetPowerupState(bool bNewIsActive)
 	RootComponent->SetVisibility(bNewIsActive, true);
 }
 
-ASPowerupActor::ASPowerupActor()
-{
-	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
-
-	SphereComp->SetCollisionProfileName("Powerup");
-	RootComponent = SphereComp;
-
-	RespawnTime = 10.0f;
-
-}
 
 
 void ASPowerupActor::Interact_Implementation(APawn* InstigatorPawn)
