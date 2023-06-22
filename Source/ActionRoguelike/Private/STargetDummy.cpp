@@ -5,6 +5,7 @@
 #include "SAttributeComponent.h"
 #include "Components/StaticMeshComponent.h"
 
+
 // Sets default values
 ASTargetDummy::ASTargetDummy()
 {
