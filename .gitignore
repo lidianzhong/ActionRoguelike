@@ -1,18 +1,22 @@
-﻿/.vs
-/Binaries
-/Content
-/DerivedDataCache
-/Intermediate
-/Saved
-/*.gitattributes
-/*.gitignore
-/*.vsconfig
-/*ActionRoguelike.sln
-/*ActionRoguelike.uproject
+﻿*
+!*/
+!*.py
 
-/.gitignore
-/ActionRoguelike.sln
-/Saved/Logs/ActionRoguelike.log
-/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini
-/.gitignore
-/.gitignore
+# /.vs
+# /Binaries
+# /Content
+# /DerivedDataCache
+# /Intermediate
+# /Saved
+# /*.gitattributes
+# /*.gitignore
+# /*.vsconfig
+# /*ActionRoguelike.sln
+# /*ActionRoguelike.uproject
+
+# /.gitignore
+# /ActionRoguelike.sln
+# /Saved/Logs/ActionRoguelike.log
+# /Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini
+# /.gitignore
+# /.gitignore
