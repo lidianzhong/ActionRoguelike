@@ -17,6 +17,16 @@ ASAICharacter::ASAICharacter()
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	TimeToHitParamName = "TimeToHit";
+}
+
+void ASAICharacter::SetTargetActor(AActor* NewTarget)
+{
+	AAIController* AIC = Cast<AAIController>(GetController());
+	if (AIC)
+	{
+		AIC->GetBlackboardComponent()->SetValueAsObject("TargetActor", NewTarget);
+	}
 }
 
 void ASAICharacter::PostInitializeComponents()
@@ -31,6 +41,13 @@ void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponen
 {
 	if (Delta < 0.0f)
 	{
+		if (InstigatorActor != this)
+		{
+			SetTargetActor(InstigatorActor);
+		}
+
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+
 		if (NewHealth <= 0.0f)
 		{
 			// stop BT
@@ -52,14 +69,10 @@ void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponen
 
 void ASAICharacter::OnPawnSeen(APawn* Pawn)
 {
-	AAIController* AIC = Cast<AAIController>(GetController());
-	if (AIC)
-	{
-		UBlackboardComponent* BBComp = AIC->GetBlackboardComponent();
 
-		BBComp->SetValueAsObject("TargetActor", Pawn);
+	SetTargetActor(Pawn);
 
-		DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
-	}
+	DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
+
 }
 
